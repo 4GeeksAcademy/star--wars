@@ -1,42 +1,93 @@
 const getState = ({ getStore, getActions, setStore }) => {
 	return {
-		store: {
-			demo: [
-				{
-					title: "FIRST",
-					background: "white",
-					initial: "white"
-				},
-				{
-					title: "SECOND",
-					background: "white",
-					initial: "white"
-				}
-			]
-		},
+		store: {},
 		actions: {
-			// Use getActions to call a function within a fuction
-			exampleFunction: () => {
-				getActions().changeColor(0, "green");
-			},
 			loadSomeData: () => {
-				/**
-					fetch().then().then(data => setStore({ "foo": data.bar }))
-				*/
-			},
-			changeColor: (index, color) => {
-				//get the store
-				const store = getStore();
 
-				//we have to loop the entire demo array to look for the respective index
-				//and change its color
-				const demo = store.demo.map((elm, i) => {
-					if (i === index) elm.background = color;
-					return elm;
-				});
+				async function fetchPlanets()  
+				{
+					let next = 'https://swapi.dev/api/planets'
+					let planets = []
+					let count = 0;
 
-				//reset the global store
-				setStore({ demo: demo });
+					try
+					{
+						while(next && count < 10)
+						{
+							const response = await fetch(next);
+							const data = await response.json();
+							planets.push(...data.results);
+							next = data.next;
+							count ++;
+						}
+					}
+					catch(error)
+					{
+						console.error(error);
+					}
+					finally{
+						return planets;
+					}
+				}
+
+				async function fetchVehicles()  
+				{
+					let next = 'https://swapi.dev/api/vehicles'
+					let vehicles = []
+					let count = 0;
+
+					try
+					{
+						while(next && count < 10)
+						{
+							const response = await fetch(next);
+							const data = await response.json();
+							vehicles.push(...data.results);
+							next = data.next;
+							count ++;
+						}
+					}
+					catch(error)
+					{
+						console.error(error);
+					}
+					finally{
+						return vehicles;
+					}
+				}
+
+				async function fetchPeople()  
+				{
+					let next = 'https://swapi.dev/api/people'
+					let people = []
+					let count = 0;
+
+					try
+					{
+						while(next && count < 10)
+						{
+							const response = await fetch(next);
+							const data = await response.json();
+							people.push(...data.results);
+							next = data.next;
+							count ++;
+						}
+					}
+					catch(error)
+					{
+						console.error(error);
+					}
+					finally{
+						return people;
+					}
+				}
+
+				fetchPlanets()
+				.then(planets => console.log("All fetched planets:", planets));
+				fetchPeople()
+				.then(people => console.log("All fetched people:", people));
+				fetchVehicles()
+				.then(vehicles => console.log("All fetched vehicles:", vehicles));
 			}
 		}
 	};
