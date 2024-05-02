@@ -3,7 +3,6 @@ const getState = ({ getStore, getActions, setStore }) => {
 		store: {},
 		actions: {
 			loadSomeData: () => {
-
 				async function fetchPlanets()  
 				{
 					let next = 'https://swapi.dev/api/planets'
@@ -82,12 +81,24 @@ const getState = ({ getStore, getActions, setStore }) => {
 					}
 				}
 
+
 				fetchPlanets()
-				.then(planets => console.log("All fetched planets:", planets));
+				.then(planets => {
+					setStore({planets: planets});
+					console.log("All fetched planets:", planets);
+				})
+
 				fetchPeople()
-				.then(people => console.log("All fetched people:", people));
+				.then(people => {
+					setStore({people: people});
+					console.log("All fetched people:", people);
+				})
+
 				fetchVehicles()
-				.then(vehicles => console.log("All fetched vehicles:", vehicles));
+				.then(vehicles => {
+					setStore({vehicles: vehicles});
+					console.log("All fetched vehicles:", vehicles);
+				})
 			}
 		}
 	};
