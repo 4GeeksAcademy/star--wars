@@ -3,18 +3,23 @@ import "../../styles/home.css";
 
 import { Context } from "../store/appContext";
 
+import { PlanetList } from "../component/planetList.jsx";
+import { PeopleList } from "../component/peopleList.jsx";
+import { VehicleList } from "../component/vehicleList.jsx";
+import { FavoriteList } from "../component/favoriteList.jsx";
+
 export const Home = () => {
 	const { store, actions } = useContext(Context);
 
 	return (
 		<div>
-			{(store.planets) && store.planets.map((planet, index) => {
-				
-				return (
-					<p key={index}>{planet.name}</p>
-				)
-			})}
-			<button onClick={()=> {console.log(store)}}>check what is in store (console.log)</button>
+			<div className='header'>
+				<FavoriteList/>
+			</div>
+			{store.planets && <PlanetList/>}
+			{!store.planets && <p>Loading</p>}
+			{store.people && <PeopleList/>}
+			{store.vehicles && <VehicleList/>}
 		</div>
 	)
 };

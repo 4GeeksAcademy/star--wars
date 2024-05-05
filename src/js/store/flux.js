@@ -1,8 +1,44 @@
 const getState = ({ getStore, getActions, setStore }) => {
 	return {
-		store: {},
+		store: JSON.parse(localStorage.getItem("store")) || {},
 		actions: {
-			loadSomeData: () => {
+
+			deleteFavorite: (item) => {
+				const store = getStore();
+				const updatedFavorites = [...store.favorites];
+				for (let i = 0; i < updatedFavorites.length; i++)
+					{
+						if (updatedFavorites[i] == item)
+							{
+								updatedFavorites.splice(i, 1);
+							}
+					}
+				setStore({favorites: updatedFavorites});
+				localStorage.setItem("store", JSON.stringify({
+					planets: store.planets,
+					people: store.people,
+					vehicles: store.vehicles,
+					favorites: updatedFavorites
+				}));
+			},
+
+			addFavorite: (item, itemType) => {
+				console.log(item);
+				item.type = itemType;
+				const store = getStore();
+				
+				const updatedFavorites = [...store.favorites];
+				updatedFavorites.push(item);
+				setStore({favorites: updatedFavorites});
+				localStorage.setItem("store", JSON.stringify({
+					planets: store.planets,
+					people: store.people,
+					vehicles: store.vehicles,
+					favorites: updatedFavorites
+				}));
+			},
+
+			loadSomeData: async () => {
 				async function fetchPlanets()  
 				{
 					let next = 'https://swapi.dev/api/planets'
@@ -81,24 +117,27 @@ const getState = ({ getStore, getActions, setStore }) => {
 					}
 				}
 
+				if(!localStorage.getItem('store')) {
+					const planets = await fetchPlanets();
+                    const people = await fetchPeople();
+                    const vehicles = await fetchVehicles();
 
-				fetchPlanets()
-				.then(planets => {
-					setStore({planets: planets});
-					console.log("All fetched planets:", planets);
-				})
+                    setStore({
+                        planets: planets,
+                        people: people,
+                        vehicles: vehicles,
+						favorites: []
+                    });
 
-				fetchPeople()
-				.then(people => {
-					setStore({people: people});
-					console.log("All fetched people:", people);
-				})
-
-				fetchVehicles()
-				.then(vehicles => {
-					setStore({vehicles: vehicles});
-					console.log("All fetched vehicles:", vehicles);
-				})
+					localStorage.setItem("store", JSON.stringify({
+                        planets: planets,
+                        people: people,
+                        vehicles: vehicles,
+						favorites: []
+                    }));
+				}
+				console.log('store:');
+				console.log(getStore());
 			}
 		}
 	};
