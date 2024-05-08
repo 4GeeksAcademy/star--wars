@@ -9,7 +9,7 @@ export const PeopleList = () => {
 
 	return (
 		<div>
-			<ul className="list-group list-group-horizontal overflow-scroll">
+			<ul className="list-group list-group-horizontal scroll">
 				{store.people.map((person, index) => (
 					<li className="list-group-item" key={index}>
 						<div className="card">
