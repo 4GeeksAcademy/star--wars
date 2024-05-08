@@ -18,8 +18,14 @@ export const VehicleList = () => {
 								<h5 className="card-title">{vehicle.name}</h5>
 								<p className="card-text">model: {vehicle.model}</p>
 								<p className="card-text">manufacturer: {vehicle.manufacturer}</p>
-								<a href={"./vehicles/" + vehicle.name} className="btn btn-primary">details</a>
-								<a onClick={() => actions.addFavorite(vehicle, 'vehicles')} className="btn btn-primary">favorite</a>
+								<div className='row d-flex flex-row justify-content-between'>
+									<div className='col'>
+										<a href={"./vehicles/" + vehicle.name} className="btn btn-primary">details</a>
+									</div>
+									<div className='col d-flex flex-row justify-content-end'>
+										<a onClick={() => actions.addFavorite(vehicle, 'vehicles')} className="btn btn-primary">favorite</a>
+									</div>
+								</div>
 							</div>
 						</div>
 					</li>

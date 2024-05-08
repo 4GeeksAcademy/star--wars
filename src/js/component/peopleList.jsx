@@ -18,8 +18,14 @@ export const PeopleList = () => {
 								<h5 className="card-title">{person.name}</h5>
 								<p className="card-text">gender: {person.gender}</p>
 								<p className="card-text">skin color: {person.skin_color}</p>
-								<a href={"./people/" + person.name} className="btn btn-primary">details</a>
-								<a onClick={() => actions.addFavorite(person, 'people')} className="btn btn-primary">favorite</a>
+								<div className='row d-flex flex-row justify-content-between'>
+									<div className='col'>
+										<a href={"./people/" + person.name} className="btn btn-primary">details</a>
+									</div>
+									<div className='col d-flex flex-row justify-content-end'>
+										<a onClick={() => actions.addFavorite(person, 'people')} className="btn btn-primary">favorite</a>
+									</div>
+								</div>
 							</div>
 						</div>
 					</li>

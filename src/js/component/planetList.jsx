@@ -9,7 +9,7 @@ export const PlanetList = () => {
 
 	return (
 		<div>
-			<ul className="list-group list-group-horizontal overflow-scroll">
+			<ul className="list-group list-group-horizontal">
 				{store.planets.map((planet, index) => (
 					<li className="list-group-item" key={index}>
 						<div className="card">
@@ -19,8 +19,14 @@ export const PlanetList = () => {
 								<p className="card-text">climate: {planet.climate}</p>
 								<p className="card-text">population: {planet.population}</p>
 								<p className="card-text">orbital period: {planet.orbital_period}</p>
-								<a href={"./planets/" + planet.name} className="btn btn-primary">details</a>
-								<a onClick={() => actions.addFavorite(planet, 'planets')} className="btn btn-primary">favorite</a>
+								<div className='row d-flex flex-row justify-content-between'>
+									<div className='col'>
+										<a href={"./planets/" + planet.name} className="btn btn-primary">details</a>
+									</div>
+									<div className='col d-flex flex-row justify-content-end'>
+										<a onClick={() => actions.addFavorite(planet, 'planets')} className="btn btn-primary">favorite</a>
+									</div>
+								</div>
 							</div>
 						</div>
 					</li>
